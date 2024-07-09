@@ -75,8 +75,8 @@ async def keys_deprecated() -> Dict[str, str]:
     """This endpoint returns a dictionary of all supported token values of the mint and their associated public key."""
     logger.trace("> GET /keys")
     keyset = ledger.get_keyset()
-    keys = KeysResponse_deprecated.parse_obj(keyset)
-    return keys.__root__
+    keys = KeysResponse_deprecated.model_validate(keyset)
+    return keys.root
 
 
 @router_deprecated.get(
@@ -99,8 +99,8 @@ async def keyset_deprecated(idBase64Urlsafe: str) -> Dict[str, str]:
     logger.trace(f"> GET /keys/{idBase64Urlsafe}")
     id = idBase64Urlsafe.replace("-", "+").replace("_", "/")
     keyset = ledger.get_keyset(keyset_id=id)
-    keys = KeysResponse_deprecated.parse_obj(keyset)
-    return keys.__root__
+    keys = KeysResponse_deprecated.model_validate(keyset)
+    return keys.root
 
 
 @router_deprecated.get(
